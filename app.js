@@ -1,6 +1,15 @@
+//Enter button For search
+document.getElementById('search-field').addEventListener("keypress", function (event) {
+    if (event.key == 'Enter') {
+        document.getElementById('search-button').click();
+    }
+});
+
+
 const searchSongs = () => {
     const searchText = document.getElementById('search-field').value;
     const url = `https://api.lyrics.ovh/suggest/${searchText}`;
+    togglerSpinner();
 
     //load Data
     fetch(url)
@@ -39,6 +48,7 @@ const displaySongs = songs => {
                 <button onclick="getLyric('${song.artist.name}', '${song.title}')" class="btn btn-success">Get Lyrics</button>
             </div>`;
             songContainer.appendChild(songDiv);
+            togglerSpinner();
 
         })
     })
@@ -73,4 +83,12 @@ const displayLyric = lyrics => {
 const displayError = error => {
     const errorTag = document.getElementById('error-message');
     errorTag.innerText = error;
+}
+
+const togglerSpinner = () => {
+    const spinner = document.getElementById('loading-spinner');
+    const songs = document.getElementById('song-container');
+
+    spinner.classList.toggle('d-none');
+    songs.classList.toggle('d-none');
 }
